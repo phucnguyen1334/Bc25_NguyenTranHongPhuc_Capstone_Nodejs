@@ -1,0 +1,345 @@
+{
+	"info": {
+		"_postman_id": "5426665f-6123-4a3b-b08a-81fd052658f5",
+		"name": "capstone",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "24337916"
+	},
+	"item": [
+		{
+			"name": "signUp",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"email\":\"phat@gmail.com\",\r\n    \"mat_khau\":\"99899989\",\r\n    \"ho_ten\":\"phat nguyen\",\r\n    \"tuoi\":\"20\",\r\n    \"anh_dai_dien\":\"\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{domain}}/user/signUp",
+					"host": [
+						"{{domain}}"
+					],
+					"path": [
+						"user",
+						"signUp"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "login",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"email\":\"phat@gmail.com\",\r\n    \"mat_khau\":\"99899989\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{domain}}/user/login",
+					"host": [
+						"{{domain}}"
+					],
+					"path": [
+						"user",
+						"login"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "lấy danh sách ảnh theo tên",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{domain}}/image/getImageByName/sunoo",
+					"host": [
+						"{{domain}}"
+					],
+					"path": [
+						"image",
+						"getImageByName",
+						"sunoo"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "lấy danh sách ảnh",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{domain}}/image/getImage",
+					"host": [
+						"{{domain}}"
+					],
+					"path": [
+						"image",
+						"getImage"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "lấy thông tin và người tạo ảnh theo id ảnh",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{domain}}/image/getImageById/1",
+					"host": [
+						"{{domain}}"
+					],
+					"path": [
+						"image",
+						"getImageById",
+						"1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "lấy thông tin bình luận theo id ảnh",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{domain}}/comment/getCommentByIdImg/1",
+					"host": [
+						"{{domain}}"
+					],
+					"path": [
+						"comment",
+						"getCommentByIdImg",
+						"1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "lấy thông tin đã lưu hình ảnh này chưa theo id ảnh",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{domain}}/image/getImageSaved/2",
+					"host": [
+						"{{domain}}"
+					],
+					"path": [
+						"image",
+						"getImageSaved",
+						"2"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "lưu thông tin bình luận",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"nguoi_dung_id\":\"2\",\r\n    \"hinh_id\":\"1\",\r\n    \"ngay_binh_luan\":\"2023-01-01\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{domain}}/comment/createComment",
+					"host": [
+						"{{domain}}"
+					],
+					"path": [
+						"comment",
+						"createComment"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "lấy thông tin user",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{domain}}/user/getUser",
+					"host": [
+						"{{domain}}"
+					],
+					"path": [
+						"user",
+						"getUser"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "danh sách ảnh đã lưu theo id user",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{domain}}/image/getImgSavedByUserId/1",
+					"host": [
+						"{{domain}}"
+					],
+					"path": [
+						"image",
+						"getImgSavedByUserId",
+						"1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "lấy danh sách ảnh đã tạo theo id user",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{domain}}/image/getImgCreatedByUserId/1",
+					"host": [
+						"{{domain}}"
+					],
+					"path": [
+						"image",
+						"getImgCreatedByUserId",
+						"1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "xóa ảnh đã tạo theo id ảnh",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "{{domain}}/image/deleteImage/3",
+					"host": [
+						"{{domain}}"
+					],
+					"path": [
+						"image",
+						"deleteImage",
+						"3"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "thêm 1 ảnh của user",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"nguoi_dung_id\":\"3\",\r\n    \"hinh_id\":\"4\",\r\n    \"ten_hinh\":\"enhypen\",\r\n    \"duong_dan\":\"\",\r\n    \"mo_ta\":\"happy\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{domain}}/image/createImage",
+					"host": [
+						"{{domain}}"
+					],
+					"path": [
+						"image",
+						"createImage"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "chỉnh sửa thông tin cá nhân",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"email\":\"phuc@gmail.com\",\r\n    \"mat_khau\":\"1234\",\r\n    \"ho_ten\":\"Nguyen Phuc\",\r\n    \"tuoi\":\"19\",\r\n    \"anh_dai_dien\":\"\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{domain}}/user/updateUser/1",
+					"host": [
+						"{{domain}}"
+					],
+					"path": [
+						"user",
+						"updateUser",
+						"1"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "domain",
+			"value": "http://localhost:8060/api",
+			"type": "string"
+		}
+	]
+}
