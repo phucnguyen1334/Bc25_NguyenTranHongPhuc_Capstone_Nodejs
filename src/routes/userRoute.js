@@ -1,25 +1,29 @@
 const express = require('express');
 const userRoute = express.Router();
-const { getUser, createUser, updateUser, deleteUser, uploadUser, signUp, login } = require('../controllers/userController')
+const { getUser, getUserByID, getUserByName, createUser, updateUser, deleteUser, uploadUser, signUp, login } = require('../controllers/userController')
 const { upload } = require('../middlewares/upload');
 
 userRoute.post("/upload_base", upload.single("dataUpload"), uploadUser);
 //POST upload
-userRoute.post("/upload", upload.single("dataUpload"), (req, res)=>{
+userRoute.post("/upload-avatar", upload.single("dataUpload"), (req, res)=>{
     console.log(req.file); 
 });
 
 //get user
-userRoute.get("/getUser", getUser);
+userRoute.get("/getUsers", getUser);
+//get user by id
+userRoute.get("/:id", getUserByID);
+//get user by name
+userRoute.get("/search/:name", getUserByName);
 
 //post create user
-userRoute.post("/createUser", createUser);
+userRoute.post("/createUsers", createUser);
 
 //put update user
-userRoute.put("/updateUser/:nguoi_dung_id", updateUser);
+userRoute.put("/updateUser/:id", updateUser);
 
 //delete user
-userRoute.delete("/deleteUser/:user_id", deleteUser);
+userRoute.delete("/deleteUsers/:id", deleteUser);
 
 //signup
 userRoute.post("/signUp", signUp);

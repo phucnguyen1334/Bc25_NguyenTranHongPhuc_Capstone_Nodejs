@@ -1,36 +1,48 @@
 const Sequelize = require('sequelize');
 module.exports = (sequelize, DataTypes) => {
-  return binh_luan.init(sequelize, DataTypes);
+  return BinhLuan.init(sequelize, DataTypes);
 }
 
-class binh_luan extends Sequelize.Model {
+class BinhLuan extends Sequelize.Model {
   static init(sequelize, DataTypes) {
   return super.init({
-    nguoi_dung_id: {
+    id: {
+      type: DataTypes.INTEGER,
+      allowNull: true
+    },
+    ma_phong: {
       type: DataTypes.INTEGER,
       allowNull: false,
       primaryKey: true,
       references: {
-        model: 'nguoi_dung',
-        key: 'nguoi_dung_id'
+        model: 'Phong',
+        key: 'id'
       }
     },
-    hinh_id: {
+    ma_nguoi_binh_luan: {
       type: DataTypes.INTEGER,
       allowNull: false,
       primaryKey: true,
       references: {
-        model: 'hinh_anh',
-        key: 'hinh_id'
+        model: 'NguoiDung',
+        key: 'id'
       }
     },
     ngay_binh_luan: {
       type: DataTypes.DATEONLY,
       allowNull: true
+    },
+    noi_dung: {
+      type: DataTypes.STRING(255),
+      allowNull: true
+    },
+    sao_binh_luan: {
+      type: DataTypes.STRING(255),
+      allowNull: true
     }
   }, {
     sequelize,
-    tableName: 'binh_luan',
+    tableName: 'BinhLuan',
     timestamps: false,
     indexes: [
       {
@@ -38,15 +50,15 @@ class binh_luan extends Sequelize.Model {
         unique: true,
         using: "BTREE",
         fields: [
-          { name: "nguoi_dung_id" },
-          { name: "hinh_id" },
+          { name: "ma_nguoi_binh_luan" },
+          { name: "ma_phong" },
         ]
       },
       {
-        name: "hinh_id",
+        name: "ma_phong",
         using: "BTREE",
         fields: [
-          { name: "hinh_id" },
+          { name: "ma_phong" },
         ]
       },
     ]

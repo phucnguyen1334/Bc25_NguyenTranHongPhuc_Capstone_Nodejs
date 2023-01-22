@@ -3,31 +3,77 @@ const init_models = require('../models/init-models');
 const model = init_models(sequelize);
 const { sucessCode, failCode, errorCode } = require('../config/reponse');
 
-//R => GET
+//GET
 const getUser = async (req, res)=>{
     try{
-        let data = await model.nguoi_dung.findAll();
+        let data = await model.NguoiDung.findAll();
         sucessCode(res,data,"Lấy dữ liệu thành công")
     }catch(err){
         errorCode(res,"Lỗi BE")
     }
 }
-
-//C => POST
+const getUserByID = async(req, res) =>{
+    try{
+        let { id } = req.params;
+        let checkUser = await model.NguoiDung.findOne({
+            where:{
+                id
+            }
+        });
+        if(checkUser){
+            let data = await model.NguoiDung.findOne({
+                where:{
+                    id
+                }
+            });
+            res.send(data);
+        }
+        else{
+            failCode(res,"","User không tồn tại")
+        } 
+    }catch(err){
+        errorCode(res,"Lỗi BE")
+    }
+}
+const getUserByName = async(req, res) =>{
+    try{
+        let { name } = req.params;
+        let checkUser = await model.NguoiDung.findOne({
+            where:{
+                name
+            }
+        });
+        if(checkUser){
+            let data = await model.NguoiDung.findOne({
+                where:{
+                    name
+                }
+            });
+            res.send(data);
+        }
+        else{
+            failCode(res,"","User không tồn tại")
+        } 
+    }catch(err){
+        errorCode(res,"Lỗi BE")
+    }
+}
+//POST
 const createUser = async (req, res)=>{
     try{
-        let { ho_ten, email, mat_khau, tuoi, anh_dai_dien } = req.body;
-        let checkEmailObj = await model.nguoi_dung.findOne({
+        let { name, email, pass_word, phone, birth_day, gender, role } = req.body;
+        let passWordHash = bcrypt.hashSync(pass_word, 10);
+        let checkEmailObj = await model.NguoiDung.findOne({
             where:{
                 email
             }
         });
         if(checkEmailObj){
-            failCode(res,{ ho_ten, email, mat_khau, tuoi, anh_dai_dien },"Email đã tồn tại")
+            failCode(res,{ name, email, pass_word, phone, birth_day, gender, role },"Email đã tồn tại")
         }
         else{
-            let result = await model.nguoi_dung.create({ 
-                ho_ten, email, mat_khau, tuoi, anh_dai_dien
+            let result = await model.NguoiDung.create({ 
+                name, email, pass_word: passWordHash, phone, birth_day, gender, role
             });
             sucessCode(res,result,"Tạo dữ liệu thành công")
         } 
@@ -35,30 +81,29 @@ const createUser = async (req, res)=>{
         errorCode(res,"Lỗi BE")
     }
 }
-//U
+
+//PUT
 const updateUser = async(req, res) =>{
-    
     try{
-        let { nguoi_dung_id } = req.params;
-        console.log(nguoi_dung_id);
-        let { email, mat_khau, ho_ten, tuoi, anh_dai_dien } = req.body;
+        let { id } = req.params;
+        let { name, email, pass_word, phone, birth_day, gender, role } = req.body;
         
-        let checkUser = await model.nguoi_dung.findOne({
+        let checkUser = await model.NguoiDung.findOne({
             where:{
-                nguoi_dung_id
+                id
             }
         });
         if(checkUser){
-            await model.nguoi_dung.update({ 
-                email, mat_khau, ho_ten, tuoi, anh_dai_dien
+            await model.NguoiDung.update({ 
+                name, email, pass_word, phone, birth_day, gender, role
             }, {
                 where:{
-                    nguoi_dung_id
+                    id
                 }
             }); 
-            let data = await model.nguoi_dung.findOne({
+            let data = await model.NguoiDung.findOne({
                 where:{
-                    nguoi_dung_id
+                    id
                 }
             });
             sucessCode(res,data,"Update thành công")
@@ -70,19 +115,20 @@ const updateUser = async(req, res) =>{
         errorCode(res,"Lỗi BE")
     }
 }
-//D
+
+//Delete
 const deleteUser = async(req, res) =>{
     try{
-        let { nguoi_dung_id } = req.params;
-        let checkUser = await model.nguoi_dung.findOne({
+        let { id } = req.params;
+        let checkUser = await model.NguoiDung.findOne({
             where:{
-                nguoi_dung_id
+                id
             }
         });
         if(checkUser){
-            await model.nguoi_dung.destroy({ 
+            await model.NguoiDung.destroy({ 
                 where:{
-                    nguoi_dung_id
+                    id
                 }
             });
             sucessCode(res,checkUser,"Xóa dữ liệu thành công")
@@ -95,6 +141,7 @@ const deleteUser = async(req, res) =>{
     }
 }
 
+//POST
 const uploadUser = async(req, res)=>{
     const fs = require('fs');
     if(req.file.size >= 400000){
@@ -120,9 +167,9 @@ const bcrypt = require('bcrypt');
 //sign up
 const signUp = async(req, res) =>{
     try{
-        let { email, mat_khau, ho_ten, tuoi, anh_dai_dien } = req.body;
-        let passWordHash = bcrypt.hashSync(mat_khau, 10);
-        let checkEmail = await model.nguoi_dung.findOne({
+        let { name, email, pass_word, phone, birth_day, gender, role } = req.body;
+        let passWordHash = bcrypt.hashSync(pass_word, 10);
+        let checkEmail = await model.NguoiDung.findOne({
             where:{
                 email
             }
@@ -131,7 +178,7 @@ const signUp = async(req, res) =>{
             failCode(res,"","Email đã tồn tại");
         }
         else{
-            let data = await model.nguoi_dung.create({ email, mat_khau: passWordHash, ho_ten, tuoi, anh_dai_dien });
+            let data = await model.NguoiDung.create({ name, email, pass_word: passWordHash, phone, birth_day, gender, role });
             sucessCode(res, data, "Đăng ký thành công !");
         }
     }
@@ -142,14 +189,14 @@ const signUp = async(req, res) =>{
 //login
 const login = async(req, res)=>{
     try{
-        let { email, mat_khau } = req.body;
-        let checkLogin = await model.nguoi_dung.findOne({
+        let { email, pass_word } = req.body;
+        let checkLogin = await model.NguoiDung.findOne({
             where:{
                 email
             }
         })
         if(checkLogin){
-            let checkPass = bcrypt.compareSync(mat_khau, checkLogin.mat_khau);
+            let checkPass = bcrypt.compareSync(pass_word, checkLogin.pass_word);
             if(checkPass){
                 sucessCode(res, checkLogin, "Login thành công");
             }
@@ -165,4 +212,4 @@ const login = async(req, res)=>{
     } 
 }
 //commonjs module
-module.exports = { getUser, createUser, updateUser, deleteUser, uploadUser, signUp, login }
+module.exports = { getUser, getUserByID, getUserByName, createUser, updateUser, deleteUser, uploadUser, signUp, login }

@@ -1,13 +1,15 @@
 const express = require('express');
-const { getCommentByIdImg, getComment, createComment, deleteComment } = require('../controllers/commentController.js');
+const { getCommentByIdPhong, getComment, createComment, updateComment, deleteComment } = require('../controllers/commentController.js');
 const commentRoute = express.Router();
 
-//GET get comment by image id
-commentRoute.get("/getCommentByIdImg/:hinh_id", getCommentByIdImg);
+//GET get comment by phong id
+commentRoute.get("/getCommentByIdPhong/:ma_phong", getCommentByIdPhong);
 //GET get comment
 commentRoute.get("/getComment", getComment);
 //POST create comment
 commentRoute.post("/createComment", createComment);
+//PUT update comment
+commentRoute.put("/updateComment/:id", updateComment);
 //DELETE comment
-commentRoute.delete("/deleteComment/:nguoi_dung_id/:hinh_id", deleteComment);
+commentRoute.delete("/deleteComment/:id", deleteComment);
 module.exports = commentRoute;
